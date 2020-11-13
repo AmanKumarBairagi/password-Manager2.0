@@ -1,2 +1,148 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+import mysql.connector as msq
+from tkinter import *
+import random
+import tkinter.messagebox as MessageBox
+
+k=[]
+for x in range(65,91):
+    w=chr(x)
+    k.append(w)
+
+def create_pass(k):
+        p=''
+        p='"'+p+'"'
+        for e in range(1,9):
+            w=random.randint(0,25)
+            p=p+k[w]
+        MessageBox.showinfo("Create Password ",p)
+
+
+def show_passwd():
+   global ent7
+   lab1=Label(a,text="Enter Unique Password Of THE PASSWORD MANAGER").place(x=420,y=500)
+   ent7=StringVar()
+   e7=Entry(a,textvariable=ent7).place(x=699,y=500)
+   but=Button(a,text="Submit",command=opn2).place(x=860,y=493)
+
+
+
+def opn2():
+
+   j=ent7.get()
+   if j=="hello":
+        lab=Label(a,text="Enter Your Prexist Website Name").place(x=530,y=580)
+        ent8=StringVar()
+        e8=Entry(a,textvariable=ent8).place(x=699,y=580)
+        but=Button(a,text="Submit",command=opn3).place(x=860,y=530)
+        
+   else:
+        print('Wrong Password')
+
+def opn3():
+    ent8='"'+ent8+'"'
+    mn='select * from mypass1 where password=' +ent8
+    mycon=msq.connect(host='localhost',user='Aman',passwd='81808')
+    r=mycon.cursor(mn)
+    r.execute('use mypass')
+    p=r.execute(mn)
+    data=r.fetchone()
+    print(data)
+        
+def opn():
+    h=ent.get()
+    if h=="1":
+        create_pass(k)
+        response=MessageBox.askyesno("Save Or Not ","Do you want toSave your password")
+        if response==1:
+            save_pass()
+            
+        else:
+           MessageBox.showinfo("Not Saving","Ok , No Problem :)")
+    elif h=="3":
+        show_passwd()
+         
+     
+    
+        
+    else:
+       MessageBox.showwarning("Warning","Something Went Wrong :(")
+        
+my_entries=[]
+def nxt():
+    el=" "
+    for z in my_entries:
+        z=StringVar()
+        el=el+str(z.get())
+    print(el)
+    MessageBox.showinfo("saving","Password Saved in your Database,go Check it out")    
+
+def save_pass():
+    a7=Label(a,text="Repeat Your Password here--->").place(x=530,y=500)
+    a7=Label(a,text="Tell me Your Website here---->").place(x=530,y=580)
+    for m in range(0,2):
+        ent3=StringVar()
+        ent4=StringVar()
+        if ent3==" ":
+             MessageBox.showwarning("","Something Went Wrong :(")
+        elif ent4==" ":
+             MessageBox.showwarning("","Something Went Wrong :(")
+        else:
+            e3=Entry(a,textvariable=ent3).place(x=699,y=500)
+            e4=Entry(a,textvariable=ent4).place(x=699,y=580)
+            e5=ent3.get()+ent4.get()
+            e6=e5.split()
+            my_entries.append(e6)
+
+
+        
+    b6=Button(a,text="Next",command=nxt).place(x=860,y=540)
+    
+def next():    
+    pi='insert into mypass1(website, password) values('+el+');'
+    mycon=msq.connect(host='localhost',user='Aman',password='81808')
+    try:
+        r=mycon.cursor()
+        r.execute('use mypass')
+        r.execute(pi)
+        mycon.commit()
+        MessageBox.showinfo("Create Password ","Password Saved Succesfully")
+      
+    except Exception as e:
+        print(e)
+        
+
+
+a=Tk()
+a6=Label(a,text="which Task do you want me to execute?,i.e.1,2,or 3", font=("black",25),bg="green",fg="black").place(x=320,y=225)
+
+ent=StringVar()
+e1=Entry(a,textvariable=ent,width=8,font=("helvetica",24)).place(x=690,y=325)
+
+a7=a6=Label(a,text="Task Goes Here---->", font=("black",25),bg="pink",fg="black").place(x=320,y=325)
+
+w=PhotoImage(file="C:\\Users\\aman8\\Pictures\\Screenshots\\pro.png")
+b1=Button(a,image=w,borderwidth=0,command=opn).place(x=662,y=400)
+
+
+
+a.geometry("4999x5999")
+a1=Label(a,text=" Welcome To My Password Manager",font=("Black",35), bg="purple").pack(fill="x")
+a1=Label(a,text=" 1.Create Password",font=("Black",22),width=15, bg="pink").place(x=45,y=125)
+a1=Label(a,text=" 2.Save Password",font=("Black",22),width=15, bg="pink").place(x=545,y=125)
+a1=Label(a,text=" 3.Ask Password",font=("Black",22),width=15, bg="pink").place(x=1045,y=125)
+
+
+p3=PhotoImage(file="C:\\Users\\aman8\\Pictures\\Screenshots\\shop.png")
+
+
+a3=Label(a,text=" Credit Goes to Mr. Rakshit Sisodiya in association with Mr.Aman Kumar Bairagi",font=("Black",10), bg="red",fg="white").pack(side="bottom",anchor="se")
+
+p1=PhotoImage(file="C:\\Users\\aman8\\Pictures\\Screenshots\\myp.png")
+p2=PhotoImage(file="C:\\Users\\aman8\\Pictures\\Screenshots\\e3.png")
+b2=Button(a,image=p2,borderwidth=0 ,padx=5,pady=6,command= a.destroy).pack(side="bottom",anchor="sw")
+
+a2=Label(a,image=p1,font=("Black",10), bg="red",fg="white",borderwidth=0).place(x=891,y=615)
+a.mainloop()
+
+
+
